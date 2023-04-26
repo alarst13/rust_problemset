@@ -5,3 +5,12 @@ version = 3
 [[package]]
 name = "magic-triples-easy"
 version = "0.1.0"
+dependencies = [
+ "readln",
+]
+
+[[package]]
+name = "readln"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5b5aa4f96e73f8409d8b0e4a56ffe532cd6739af08b01dfde12d3b225f54c44f"
