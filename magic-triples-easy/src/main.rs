@@ -1,45 +1,36 @@
-#[macro_use]
-extern crate readln;
+use std::io;
 
-// returns a vector of all numbers that are divisible by seq[start]
-fn find_divs(start: usize, seq: Vec<usize>) -> Vec<usize> {
-    let mut divs = Vec::new();
-    for i in start..seq.len() {
-        if seq[i] % seq[start] == 0 {
-            divs.push(seq[i])
-        }
-    }
-    divs
+// reads input strings in the format of x, y, z, ..., and converts the strings into a vector of integers x, y, z, ....
+fn read_in_row(_n: Option<usize>) -> Vec<usize> {
+    let mut line = String::new();
+    io::stdin().read_line(&mut line).unwrap();
+    let trimmed = line.trim();
+    let vec: Vec<usize> = trimmed.split(" ").map(|s| s.parse::<usize>().unwrap()).collect();
+    vec
 }
 
 fn main() {
-    let t: usize = read!(usize).unwrap();
+    let t = read_in_row(None)[0];
 
     for _ in 0..t {
-        let mut n: usize = read!(usize).unwrap();
+        let mut sum: i32 = 0;
+        let n = read_in_row(None)[0];
         let mut seq = Vec::new();
-        let mut divs = Vec::new();
-        for _ in 0..n {
-            let a = read!(usize).unwrap();
-            seq.push(a);
-        }
+        seq.append(&mut read_in_row(Some(n)));
         seq.sort();
-        println!("{:?}", seq);
 
-        // get different lists of divisibls
-        // if a list is a subset of another, do not approve it
-        for i in 0..n {
-            divs.append(&mut (find_divs(i, seq.clone())));
-            let mut p = 0;
-            println!("{:?}", divs);
-            for j in i..n {
-                if divs.contains(&seq[j-p]) {
-                    seq.remove(j-p);
-                    n -= 1;
-                    p += 1;
+        for i in 0..seq.len() {
+            for j in 0..seq.len() {
+                if j != i && seq[j] % seq[i] == 0 {
+                    let quotient = seq[j] / seq[i];
+                    for k in 0..seq.len() {
+                        if k != j && k != i && seq[k] == quotient * seq[j]{
+                            sum += 1;
+                        }
+                    }
                 }
             }
-            divs.clear();
         }
+        println!("{}", sum);
     }
 }
